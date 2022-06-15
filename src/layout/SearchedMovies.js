@@ -1,14 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import Btn from '../components/Btn';
 import MovieCard from '../components/MovieCard';
 import MoviesWrapper from './MoviesWrapper';
 
 function SearchedMovies() {
   const searchResult = useSelector(state => state.search);
-  const { id } = useParams();
-  console.log(searchResult);
   return (
     <div className='container'>
       {searchResult === 'loading' ? (

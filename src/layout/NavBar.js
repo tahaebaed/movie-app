@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useTransition } from 'react';
+import React, { useState } from 'react';
 import { BsSearch } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Btn from '../components/Btn';
-import { popularMovieRequest } from '../store/popular-movies/actions';
 import { handleSearchRequest } from '../store/search/actions';
 
 function NavBar({ query, setQuery }) {

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
 import ReactStars from 'react-rating-stars-component';
 import { Link } from 'react-router-dom';
 
