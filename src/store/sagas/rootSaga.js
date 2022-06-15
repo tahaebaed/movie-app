@@ -1,9 +1,9 @@
 import { all } from 'redux-saga/effects';
-import movieSaga from '../movie/saga';
+import searchSaga from '../search/saga';
 import popularSaga from '../popular-movies/saga';
 
 function* rootSaga() {
-  yield all([popularSaga(), movieSaga()]);
+  yield all([popularSaga(), searchSaga()]);
 }
 
 export default rootSaga;

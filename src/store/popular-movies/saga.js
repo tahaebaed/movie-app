@@ -3,9 +3,10 @@ import { popularMovieResponse } from './actions';
 import { fetchPopularData } from './api';
 import { POPULAR_MOVIES_REQUEST } from './types';
 
-function* getPopularMovie() {
+function* getPopularMovie({ page, query }) {
   try {
-    const response = yield call(fetchPopularData);
+    console.log(page);
+    const response = yield call(fetchPopularData, page, query);
     const { data } = response;
     yield put(popularMovieResponse(data));
   } catch (error) {
