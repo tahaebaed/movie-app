@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -6,8 +6,6 @@ import Btn from '../components/Btn';
 import { handleSearchRequest } from '../store/search/actions';
 
 function NavBar({ query, setQuery }) {
-  const [search, setSearch] = useState(false);
-
   const dispatch = useDispatch();
   return (
     <>
@@ -24,24 +22,19 @@ function NavBar({ query, setQuery }) {
               </Link>
             </li>
           </ul>
-          <div className='d-flex align-items-center'>
-            {search && (
-              <input
-                type='text'
-                value={query}
-                className='input me-2'
-                onChange={e => {
-                  setQuery(e.target.value);
+          <div className='d-flex align-items-center w-50 justify-content-end'>
+            <input
+              type='text'
+              value={query}
+              className='input me-2 w-75'
+              onChange={e => {
+                setQuery(e.target.value);
 
-                  dispatch(handleSearchRequest(e.target.value));
-                }}
-                placeholder='hello'
-              />
-            )}
-            <Btn
-              btnClassName='search-icon-container'
-              handleClick={() => setSearch(s => !s)}
-            >
+                dispatch(handleSearchRequest(e.target.value));
+              }}
+              placeholder='Put something to search'
+            />
+            <Btn btnClassName='search-icon-container' btnType='submit'>
               <BsSearch className='text-white' />
             </Btn>
           </div>
