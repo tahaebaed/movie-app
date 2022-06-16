@@ -1,33 +1,57 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import MovieCard from '../components/MovieCard';
-import MoviesWrapper from './MoviesWrapper';
+import React, { useDeferredValue, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, Navigate, useParams } from 'react-router-dom'
+import Btn from '../components/Btn'
+import MovieCard from '../components/MovieCard'
+import { handleSearchRequest } from '../store/search/actions'
+import MoviesWrapper from './MoviesWrapper'
 
-function SearchedMovies() {
-  const searchResult = useSelector(state => state.search);
-  return (
+const SearchedMovies = ({ query }) => {
+  const { search, popular } = useSelector(state => state)
+  const { id } = useParams()
+
+  const noMoreResultState =
+    id < 1 ? 'Movie With that name' : 'more movies with that name'
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(handleSearchRequest(id, query))
+  }, [dispatch, id, query])
+  return query === '' ? (
+    <Navigate to={`/movie-app/popular/${popular?.page || 1}`} replace />
+  ) : (
     <div className='container'>
-      {searchResult === 'loading' ? (
+      {search === 'loading' ? (
         <p>loading</p>
-      ) : searchResult.results.length === 0 ? (
-        <h3>There is no Movie With that name</h3>
+      ) : search.results.length === 0 ? (
+        <h3>There is no {noMoreResultState}</h3>
       ) : (
         <>
           <MoviesWrapper>
-            {searchResult.results?.map(movie => (
-              <MovieCard
-                id={movie.id}
-                imgSrc={movie.poster_path}
-                rating={movie.vote_average}
-                title={movie.title}
-                key={movie.id}
-              />
+            {search.results?.map(movie => (
+              <MovieCard movie={movie} key={movie.id} />
             ))}
           </MoviesWrapper>
         </>
       )}
+      <div
+        className={`d-flex justify-content-${
+          id === `1` ? 'end' : 'between'
+        } fixed-bottom container mb-2`}
+      >
+        {id > 1 && (
+          <Link to={`/movie-app/search/${+id - 1}`}>
+            <Btn btnClassName='btn btn-dark'>Page {+id - 1}</Btn>
+          </Link>
+        )}
+        {search.results?.length > 0 && (
+          <Link to={`/movie-app/search/${+id + 1}`}>
+            <Btn btnClassName='btn btn-dark'>Page {+id + 1}</Btn>
+          </Link>
+        )}
+      </div>
     </div>
-  );
+  )
 }
 
-export default SearchedMovies;
+export default SearchedMovies

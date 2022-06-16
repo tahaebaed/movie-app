@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import ReactStars from 'react-rating-stars-component';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import ReactStars from 'react-rating-stars-component'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
   BsRecordCircleFill,
   BsArrowLeftShort,
   BsLink45Deg,
-} from 'react-icons/bs';
-import { FaImdb, FaPlay } from 'react-icons/fa';
-import Btn from '../components/Btn';
-import { moviesInstance } from '../utilities/movieInstance';
+} from 'react-icons/bs'
+import { FaImdb, FaPlay } from 'react-icons/fa'
+import Btn from '../components/Btn'
+import { moviesInstance } from '../utilities/movieInstance'
 
-function MovieInfo() {
-  const { id } = useParams();
-  const [movieInfo, setMovieInfo] = useState(false);
-  const [castInfo, setCastInfo] = useState(false);
-  const navigate = useNavigate();
+const MovieInfo = () => {
+  const { id } = useParams()
+  const [movieInfo, setMovieInfo] = useState(false)
+  const [castInfo, setCastInfo] = useState(false)
+  const navigate = useNavigate()
   useEffect(() => {
     moviesInstance
       .request({
         method: 'GET',
         url: `movie/${id}?api_key=6acbd1e77111f3ead9c9bba49d78ba9f`,
       })
-      .then(res => setMovieInfo(res.data));
+      .then(res => setMovieInfo(res.data))
     moviesInstance
       .request({
         method: 'GET',
         url: `movie/${id}/credits?api_key=6acbd1e77111f3ead9c9bba49d78ba9f`,
       })
-      .then(res => setCastInfo(res.data));
-  }, [id]);
+      .then(res => setCastInfo(res.data))
+  }, [id])
   return (
     movieInfo && (
       <>
@@ -44,7 +44,7 @@ function MovieInfo() {
             <h2 className='fw-lighter'>{movieInfo.title}</h2>
             <h3 className='fs-5 fw-bold'>{movieInfo.tagline}</h3>
             <div className='d-flex justify-content-between'>
-              <div className='d-flex align-items-center'>
+              <div className='d-flex align-items-center flex-column flex-md-column flex-lg-row'>
                 <ReactStars
                   count={5}
                   value={movieInfo.vote_average / 2}
@@ -53,11 +53,11 @@ function MovieInfo() {
                 />
                 <p className='ms-3 my-auto'>{movieInfo.vote_average}</p>
               </div>
-              <div className='movie-info-date'>
-                {movieInfo?.spoken_languages?.map(language =>
-                  language.name.toUpperCase()
+              <div className='movie-info-date d-flex align-items-center'>
+                {movieInfo?.spoken_languages?.map(
+                  language => `${language.name.toUpperCase()}/`
                 )}
-                /{movieInfo.runtime} min/
+                {movieInfo.runtime} min/
                 {movieInfo.release_date.match(/\d+/)}
               </div>
             </div>
@@ -123,7 +123,7 @@ function MovieInfo() {
         </div>
       </>
     )
-  );
+  )
 }
 
-export default MovieInfo;
+export default MovieInfo

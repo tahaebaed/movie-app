@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import NavBar from '../layout/NavBar';
-import RoutesRoot from '../routes/RoutesRoot';
+import React, { useState } from 'react'
+import NavBar from '../layout/NavBar'
+import RoutesRoot from '../routes/RoutesRoot'
 
-function Index() {
-  const [query, setQuery] = useState('');
+const Index = () => {
+  const [query, setQuery] = useState('')
   return (
     <>
       <NavBar query={query} setQuery={setQuery} />
@@ -11,7 +11,7 @@ function Index() {
         <RoutesRoot query={query} />
       </section>
     </>
-  );
+  )
 }
 
-export default Index;
+export default Index

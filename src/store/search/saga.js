@@ -1,20 +1,21 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { handleSearchResponse } from './actions';
-import { fetchSearchData } from './apis';
-import * as TYPES from './types';
+import { call, put, takeLatest } from 'redux-saga/effects'
+import { handleSearchResponse } from './actions'
+import { fetchSearchData } from './apis'
+import * as TYPES from './types'
 
-function* getMovieInfo({ query }) {
+function* getMovieInfo({ page, query }) {
   try {
-    const searchResponse = yield call(fetchSearchData, query);
-    const { data } = searchResponse;
-    yield put(handleSearchResponse(data));
+    console.log(page, query)
+    const searchResponse = yield call(fetchSearchData, query, page)
+    const { data } = searchResponse
+    yield put(handleSearchResponse(data))
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 function* searchSaga() {
-  yield takeLatest(TYPES.MOVIE_SEARCH_REQUEST, getMovieInfo);
+  yield takeLatest(TYPES.MOVIE_SEARCH_REQUEST, getMovieInfo)
 }
 
-export default searchSaga;
+export default searchSaga
