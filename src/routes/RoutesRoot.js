@@ -1,6 +1,5 @@
 import React, { useDeferredValue } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import NavBar from '../layout/NavBar'
 import SearchedMovies from '../layout/SearchedMovies'
 import { Home, MovieInfo, PopularMovies, WatchList } from './lazyLoading'
 
