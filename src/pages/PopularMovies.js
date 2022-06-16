@@ -14,7 +14,7 @@ const PopularMovies = ({ query }) => {
     dispatch(popularMovieRequest(id))
   }, [dispatch, id, query])
   return query !== '' ? (
-    <Navigate to='/movie-app/search/1' replace />
+    <Navigate to='/search/1' replace />
   ) : (
     <div className='container'>
       {popular === 'loading' ? (
@@ -32,11 +32,11 @@ const PopularMovies = ({ query }) => {
             } fixed-bottom container mb-2`}
           >
             {id > 1 && (
-              <Link to={`/movie-app/popular/${+id - 1}`}>
+              <Link to={`/popular/${+id - 1}`}>
                 <Btn btnClassName='btn btn-dark'>Page {+id - 1}</Btn>
               </Link>
             )}
-            <Link to={`/movie-app/popular/${+id + 1}`}>
+            <Link to={`/popular/${+id + 1}`}>
               <Btn btnClassName='btn btn-dark'>Page {+id + 1}</Btn>
             </Link>
           </div>

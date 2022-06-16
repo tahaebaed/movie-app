@@ -9,7 +9,7 @@ const Home = ({ query }) =>
   ) : (
     <div>
       <h1 className='mt-5'>Welcome To Our Movie Website</h1>
-      <Link to='/movie-app/popular/1' className='text-decoration-none'>
+      <Link to='/popular/1' className='text-decoration-none'>
         <Btn btnClassName='btn btn-primary'>Popular</Btn>
       </Link>
     </div>

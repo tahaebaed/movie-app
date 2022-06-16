@@ -1,4 +1,4 @@
-import React, { useDeferredValue, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import Btn from '../components/Btn'
@@ -18,17 +18,17 @@ const SearchedMovies = ({ query }) => {
     dispatch(handleSearchRequest(id, query))
   }, [dispatch, id, query])
   return query === '' ? (
-    <Navigate to={`/movie-app/popular/${popular?.page || 1}`} replace />
+    <Navigate to={`/popular/${popular?.page || 1}`} replace />
   ) : (
     <div className='container'>
       {search === 'loading' ? (
         <p>loading</p>
-      ) : search.results.length === 0 ? (
+      ) : search?.results?.length === 0 ? (
         <h3>There is no {noMoreResultState}</h3>
       ) : (
         <>
           <MoviesWrapper>
-            {search.results?.map(movie => (
+            {search?.results?.map(movie => (
               <MovieCard movie={movie} key={movie.id} />
             ))}
           </MoviesWrapper>
@@ -44,7 +44,7 @@ const SearchedMovies = ({ query }) => {
             <Btn btnClassName='btn btn-dark'>Page {+id - 1}</Btn>
           </Link>
         )}
-        {search.results?.length > 0 && (
+        {search?.results?.length > 0 && (
           <Link to={`/movie-app/search/${+id + 1}`}>
             <Btn btnClassName='btn btn-dark'>Page {+id + 1}</Btn>
           </Link>

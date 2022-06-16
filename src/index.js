@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router, HashRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -16,9 +16,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
+      <HashRouter>
         <App />
-      </Router>
+      </HashRouter>
       <ToastContainer position='bottom-right' theme='dark' />
     </Provider>
   </React.StrictMode>

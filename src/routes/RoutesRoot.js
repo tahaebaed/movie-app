@@ -9,21 +9,14 @@ const RoutesRoot = props => {
   return (
     <React.Suspense fallback={<p>Loading..</p>}>
       <Routes>
-        <Route path='/' element={<NavBar />} />
-        <Route path='/movie-app' element={<Home query={query} />} exact />
+        <Route path='/' element={<Home query={query} />} exact />
 
-        <Route
-          path='/movie-app/popular/:id'
-          element={<PopularMovies query={query} />}
-        />
+        <Route path='/popular/:id' element={<PopularMovies query={query} />} />
 
-        <Route
-          path='/movie-app/search/:id'
-          element={<SearchedMovies query={query} />}
-        />
+        <Route path='/search/:id' element={<SearchedMovies query={query} />} />
 
-        <Route path='/movie-app/movie/:id' element={<MovieInfo />} />
-        <Route path='/movie-app/watchList/' element={<WatchList />} />
+        <Route path='/movie/:id' element={<MovieInfo />} />
+        <Route path='/watchList/' element={<WatchList />} />
         <Route path='*' element={<p> 404 page not found</p>} />
       </Routes>
     </React.Suspense>
