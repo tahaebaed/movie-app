@@ -6,38 +6,56 @@ import { RiPlayList2Fill } from 'react-icons/ri'
 
 const NavBar = ({ query, setQuery }) => (
   <>
-    <nav className='navbar navbar-expand-lg navbar-white bg-white container'>
+    <nav className='navbar navbar-expand-lg navbar-light bg-light container'>
       <div className='container-fluid'>
-        <ul className='navbar-nav'>
-          <li>
-            <Link
-              className='nav-item dropdown d-flex align-items-start flex-column text-decoration-none text-dark'
-              to='/popular/1'
-            >
-              <h3 className='fw-light'>POPULAR</h3>
-              <p>Movies</p>
-            </Link>
-          </li>
-        </ul>
-        <div className='d-flex align-items-center w-50 justify-content-end'>
-          <Link to='/watchList/'>
-            <Btn btnClassName='btn btn-outline-success me-2'>
-              watchlist <RiPlayList2Fill />
-            </Btn>
-          </Link>
-          <input
-            type='text'
-            value={query}
-            className='input me-2 w-50 p-1'
-            onChange={e => {
-              setQuery(e.target.value)
-            }}
-            placeholder='Search...'
-          />
+        <Link
+          className='nav-item dropdown d-flex align-items-start flex-column text-decoration-none text-dark navbar-brand'
+          to='/popular/1'
+        >
+          <h3 className='fw-light'>POPULAR</h3>
+          <p>Movies</p>
+        </Link>
+        <button
+          className='navbar-toggler'
+          type='button'
+          data-bs-toggle='collapse'
+          data-bs-target='#navbarScroll'
+          aria-controls='navbarScroll'
+          aria-expanded='false'
+          aria-label='Toggle navigation'
+        >
+          <span className='navbar-toggler-icon'></span>
+        </button>
+        <div
+          className='collapse navbar-collapse justify-content-end'
+          id='navbarScroll'
+        >
+          <ul className='navbar-nav me-0 my-2 my-lg-0 navbar-nav-scroll'>
+            <li className='nav-item '>
+              <Link to='/watchList/' className='navbar-link btn-hover-state'>
+                <Btn btnClassName='btn text-success me-2 '>
+                  watchlist <RiPlayList2Fill />
+                </Btn>
+              </Link>
+            </li>
+          </ul>
 
-          <Btn btnClassName='search-icon-container' btnType='submit'>
-            <BsSearch className='text-white' />
-          </Btn>
+          <form class='d-flex'>
+            <input
+              type='search'
+              placeholder='Search'
+              aria-label='Search'
+              value={query}
+              className='form-control me-2'
+              onChange={e => {
+                setQuery(e.target.value)
+              }}
+            />
+
+            <Btn btnClassName='search-icon-container' btnType='submit'>
+              <BsSearch className='text-white' />
+            </Btn>
+          </form>
         </div>
       </div>
     </nav>
