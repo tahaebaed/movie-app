@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkmovie_app=self.webpackChunkmovie_app||[]).push([[266],{1266:function(e,s,a){a.r(s);a(2791);var n=a(3504),r=a(5614),i=a(7266),t=a(184);s.default=function(e){return""!==e.query?(0,t.jsx)(i.Z,{}):(0,t.jsxs)("div",{children:[(0,t.jsx)("h1",{className:"mt-5",children:"Welcome To Our Movie Website"}),(0,t.jsx)(n.rU,{to:"/movie-app/popular/1",className:"text-decoration-none",children:(0,t.jsx)(r.Z,{btnClassName:"btn btn-primary",children:"Popular"})})]})}}}]);
+//# sourceMappingURL=266.072455db.chunk.js.map
