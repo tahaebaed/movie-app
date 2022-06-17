@@ -8,13 +8,15 @@ const NavBar = ({ query, setQuery }) => (
   <>
     <nav className='navbar navbar-expand-lg navbar-light bg-light container'>
       <div className='container-fluid'>
-        <Link
-          className='nav-item dropdown d-flex align-items-start flex-column text-decoration-none text-dark navbar-brand'
-          to='/popular/1'
-        >
-          <h3 className='fw-light'>POPULAR</h3>
-          <p>Movies</p>
-        </Link>
+        <Btn btnClassName='btn btn-text' handleClick={() => setQuery('')}>
+          <Link
+            className='nav-item dropdown d-flex align-items-start flex-column text-decoration-none text-dark navbar-brand'
+            to='/popular/1'
+          >
+            <h3 className='fw-light'>POPULAR</h3>
+            <p>Movies</p>
+          </Link>
+        </Btn>
         <button
           className='navbar-toggler'
           type='button'
@@ -32,11 +34,17 @@ const NavBar = ({ query, setQuery }) => (
         >
           <ul className='navbar-nav me-0 my-2 my-lg-0 navbar-nav-scroll'>
             <li className='nav-item '>
-              <Link to='/watchList/' className='navbar-link btn-hover-state'>
-                <Btn btnClassName='btn text-success me-2 '>
+              <Btn
+                btnClassName='btn text-success me-2 '
+                handleClick={() => setQuery('')}
+              >
+                <Link
+                  to='/watchList/'
+                  className='navbar-link btn-hover-state text-decoration-none text-success'
+                >
                   watchlist <RiPlayList2Fill />
-                </Btn>
-              </Link>
+                </Link>
+              </Btn>
             </li>
           </ul>
 

@@ -13,6 +13,7 @@ const PopularMovies = ({ query }) => {
   useEffect(() => {
     dispatch(popularMovieRequest(id))
   }, [dispatch, id, query])
+
   return query !== '' ? (
     <Navigate to='/search/1' replace />
   ) : (
@@ -36,9 +37,11 @@ const PopularMovies = ({ query }) => {
                 <Btn btnClassName='btn btn-dark'>Page {+id - 1}</Btn>
               </Link>
             )}
-            <Link to={`/popular/${+id + 1}`}>
-              <Btn btnClassName='btn btn-dark'>Page {+id + 1}</Btn>
-            </Link>
+            {id < popular?.total_pages && (
+              <Link to={`/popular/${+id + 1}`}>
+                <Btn btnClassName='btn btn-dark'>Page {+id + 1}</Btn>
+              </Link>
+            )}
           </div>
         </>
       )}

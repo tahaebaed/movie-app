@@ -5,7 +5,6 @@ import * as TYPES from './types'
 
 function* getMovieInfo({ page, query }) {
   try {
-    console.log(page, query)
     const searchResponse = yield call(fetchSearchData, query, page)
     const { data } = searchResponse
     yield put(handleSearchResponse(data))

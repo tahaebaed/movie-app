@@ -5,16 +5,29 @@ import {
   BsRecordCircleFill,
   BsArrowLeftShort,
   BsLink45Deg,
+  BsHeart,
+  BsHeartFill,
 } from 'react-icons/bs'
 import { FaImdb, FaPlay } from 'react-icons/fa'
 import Btn from '../components/Btn'
 import { moviesInstance } from '../utilities/movieInstance'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import {
+  handleAddToWatchList,
+  handlerRemoveToWatchList,
+} from '../store/watchList.js/actions'
 
 const MovieInfo = () => {
   const { id } = useParams()
   const [movieInfo, setMovieInfo] = useState(false)
   const [castInfo, setCastInfo] = useState(false)
   const navigate = useNavigate()
+  const watchList = useSelector(state => state.watchList)
+  const dispatch = useDispatch()
+
+  const filtered = watchList.filter(mov => mov.id === movieInfo.id)
+
   useEffect(() => {
     moviesInstance
       .request({
@@ -35,16 +48,43 @@ const MovieInfo = () => {
         <div className='row row-cols-lg-2 row-cols-md-1 row-cols-1 mt-3'>
           <div className='col'>
             <img
-              className='movie-info-img rounded-3'
+              className='movie-info-img rounded-3 mb-3'
               src={`https://image.tmdb.org/t/p/w780${movieInfo.backdrop_path}`}
               alt={movieInfo.title}
             />
           </div>
           <div className='col text-start'>
-            <h2 className='fw-lighter'>{movieInfo.title}</h2>
+            <div className='d-flex justify-content-between my-3 align-items-center'>
+              <h2 className='fw-lighter'>{movieInfo.title}</h2>
+              {filtered?.length === 1 ? (
+                <Btn
+                  btnClassName='bg-transparent border-0 info-favorite text-danger'
+                  handleClick={() => {
+                    dispatch(handlerRemoveToWatchList(movieInfo.id))
+                    toast.success(
+                      `${movieInfo.title} has been removed to your watchlist`
+                    )
+                  }}
+                >
+                  remove from watchlist <BsHeartFill />
+                </Btn>
+              ) : (
+                <Btn
+                  btnClassName='bg-transparent border-0 text-danger'
+                  handleClick={() => {
+                    dispatch(handleAddToWatchList(movieInfo))
+                    toast.success(
+                      `${movieInfo.title} has been added to your watchlist`
+                    )
+                  }}
+                >
+                  Add to watchlist <BsHeart />
+                </Btn>
+              )}
+            </div>
             <h3 className='fs-5 fw-bold'>{movieInfo.tagline}</h3>
             <div className='d-flex justify-content-between'>
-              <div className='d-flex align-items-center flex-column flex-md-column flex-lg-row'>
+              <div className='d-flex align-items-center flex-row'>
                 <ReactStars
                   count={5}
                   value={movieInfo.vote_average / 2}
@@ -53,6 +93,7 @@ const MovieInfo = () => {
                 />
                 <p className='ms-3 my-auto'>{movieInfo.vote_average}</p>
               </div>
+
               <div className='movie-info-date d-flex align-items-center'>
                 {movieInfo?.spoken_languages?.map(
                   language => `${language.name.toUpperCase()}/`

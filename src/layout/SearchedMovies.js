@@ -40,12 +40,12 @@ const SearchedMovies = ({ query }) => {
         } fixed-bottom container mb-2`}
       >
         {id > 1 && (
-          <Link to={`/movie-app/search/${+id - 1}`}>
+          <Link to={`/search/${+id - 1}`}>
             <Btn btnClassName='btn btn-dark'>Page {+id - 1}</Btn>
           </Link>
         )}
-        {search?.results?.length > 0 && (
-          <Link to={`/movie-app/search/${+id + 1}`}>
+        {id <= search?.total_pages && (
+          <Link to={`/search/${+id + 1}`}>
             <Btn btnClassName='btn btn-dark'>Page {+id + 1}</Btn>
           </Link>
         )}

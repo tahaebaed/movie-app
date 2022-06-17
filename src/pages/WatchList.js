@@ -1,6 +1,7 @@
 import React from 'react'
 import { BsLink45Deg, BsTrash } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Btn from '../components/Btn'
 import { handlerRemoveToWatchList } from '../store/watchList.js/actions'
 
@@ -28,7 +29,14 @@ const WatchList = () => {
           watchList.map(movie => (
             <tr>
               <th scope='row'>{movie.id}</th>
-              <td>{movie.title}k</td>
+              <td>
+                <Link
+                  to={`/movie/${movie.id}`}
+                  className='text-decoration-none'
+                >
+                  {movie.title}
+                </Link>
+              </td>
               <td>{movie.vote_average}</td>
               <td>
                 <a href={movie.homepage} target='_blank' rel='noreferrer'>

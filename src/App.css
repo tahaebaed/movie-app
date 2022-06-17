@@ -50,13 +50,17 @@
 
 .movie-card-container {
   height: 400px;
-  position: relative;
+}
+
+.title-rate-container {
+  padding-bottom: 1rem;
 }
 
 .movie-card-img {
   width: 100%;
   height: 100%;
   border-radius: 10px 10px 0 0;
+  object-fit: cover;
 }
 
 .movie-info-img {
@@ -86,10 +90,10 @@
 }
 
 .favorite-btn {
-  position: absolute;
+  position: relative;
   color: red;
-  top: 1rem;
-  right: 1rem;
+  top: 2.5rem;
+  right: -6.5rem;
   font-size: 1.2rem;
 }
 

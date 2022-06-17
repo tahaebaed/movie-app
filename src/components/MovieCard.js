@@ -19,6 +19,27 @@ const MovieCard = ({ movie }) => {
   return (
     <>
       <div className='d-flex flex-column justify-content-center  align-items-center col movie-card-hover-State position-relative'>
+        {filtered?.length === 1 ? (
+          <Btn
+            btnClassName='bg-transparent border-0 favorite-btn'
+            handleClick={() => {
+              dispatch(handlerRemoveToWatchList(movie.id))
+              toast.error(`${movie.title} has been removed to your watchlist`)
+            }}
+          >
+            <BsHeartFill />
+          </Btn>
+        ) : (
+          <Btn
+            btnClassName='bg-transparent border-0 favorite-btn'
+            handleClick={() => {
+              dispatch(handleAddToWatchList(movie))
+              toast.success(`${movie.title} has been added to your watchlist`)
+            }}
+          >
+            <BsHeart />
+          </Btn>
+        )}
         <Link to={`/movie/${movie.id}`} className='text-decoration-none'>
           <div className='movie-card-container'>
             <img
@@ -26,33 +47,8 @@ const MovieCard = ({ movie }) => {
               src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
               alt={movie.title}
             />
-            {filtered?.length === 1 ? (
-              <Btn
-                btnClassName='bg-transparent border-0 favorite-btn'
-                handleClick={() => {
-                  dispatch(handlerRemoveToWatchList(movie.id))
-                  toast.success(
-                    `${movie.title} has been removed to your watchlist`
-                  )
-                }}
-              >
-                <BsHeartFill />
-              </Btn>
-            ) : (
-              <Btn
-                btnClassName='bg-transparent border-0 favorite-btn'
-                handleClick={() => {
-                  dispatch(handleAddToWatchList(movie))
-                  toast.success(
-                    `${movie.title} has been added to your watchlist`
-                  )
-                }}
-              >
-                <BsHeart />
-              </Btn>
-            )}
           </div>
-          <div className='title-rate-container'>
+          <div className='title-rate-container  '>
             <h6 className='movie-card-title'>{movie.title}</h6>
             <ReactStars
               count={5}
