@@ -1,9 +1,9 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import { handleSearchResponse } from './actions'
+import { handleSearchQueryResponse, handleSearchResponse } from './actions'
 import { fetchSearchData } from './apis'
 import * as TYPES from './types'
 
-function* getMovieInfo({ page, query }) {
+function* getSearchMovies({ page, query }) {
   try {
     const searchResponse = yield call(fetchSearchData, query, page)
     const { data } = searchResponse
@@ -13,8 +13,17 @@ function* getMovieInfo({ page, query }) {
   }
 }
 
+function* getSearchMoviesQuery({ payload }) {
+  try {
+    yield put(handleSearchQueryResponse(payload))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 function* searchSaga() {
-  yield takeLatest(TYPES.MOVIE_SEARCH_REQUEST, getMovieInfo)
+  yield takeLatest(TYPES.MOVIE_SEARCH_REQUEST, getSearchMovies)
+  yield takeLatest(TYPES.SEARCH_MOVIES_QUERY_REQUEST, getSearchMoviesQuery)
 }
 
 export default searchSaga

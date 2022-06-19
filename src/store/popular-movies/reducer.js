@@ -6,6 +6,8 @@ function popularReducer(initState = null, action) {
       return (initState = 'loading')
     case TYPES.POPULAR_MOVIES_RESPONSE:
       return (initState = { ...action.payload })
+    case TYPES.POPULAR_MOVIES_QUERY_RESPONSE:
+      return (initState = { ...action.payload?.data })
     default:
       return initState
   }

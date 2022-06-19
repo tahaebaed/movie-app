@@ -11,16 +11,20 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import store from './store/store'
 import { ToastContainer } from 'react-toastify'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
+const queryClient = new QueryClient()
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <HashRouter>
-        <App />
-      </HashRouter>
-      <ToastContainer position='bottom-right' theme='dark' />
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <HashRouter>
+          <App />
+        </HashRouter>
+        <ToastContainer position='bottom-right' theme='dark' />
+      </Provider>
+    </QueryClientProvider>
   </React.StrictMode>
 )
 
