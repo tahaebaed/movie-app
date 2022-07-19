@@ -1,5 +1,6 @@
 import React from 'react'
 import { BsHeart, BsHeartFill } from 'react-icons/bs'
+import { useIntl } from 'react-intl'
 import ReactStars from 'react-rating-stars-component'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -11,6 +12,7 @@ import {
 import Btn from './Btn'
 
 const MovieCard = ({ movie }) => {
+  const intl = useIntl()
   const watchList = useSelector(state => state.watchList)
   const dispatch = useDispatch()
 
@@ -24,7 +26,7 @@ const MovieCard = ({ movie }) => {
             btnClassName='bg-transparent border-0 favorite-btn'
             handleClick={() => {
               dispatch(handlerRemoveToWatchList(movie.id))
-              toast.error(`${movie.title} has been removed to your watchlist`)
+              toast.error(`${movie.title} ${intl.messages.removed}`)
             }}
           >
             <BsHeartFill />
@@ -34,7 +36,7 @@ const MovieCard = ({ movie }) => {
             btnClassName='bg-transparent border-0 favorite-btn'
             handleClick={() => {
               dispatch(handleAddToWatchList(movie))
-              toast.success(`${movie.title} has been added to your watchlist`)
+              toast.success(`${movie.title} ${intl.messages.added}`)
             }}
           >
             <BsHeart />
@@ -55,7 +57,6 @@ const MovieCard = ({ movie }) => {
               classNames='m-auto'
               value={movie.vote_average / 2}
               size={24}
-              isHalf
               activeColor='#000'
             />
           </div>

@@ -2,6 +2,7 @@ import React from 'react'
 import { BsLink45Deg, BsTrash } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 import Btn from '../components/Btn'
 import { handlerRemoveToWatchList } from '../store/watchList.js/actions'
 
@@ -13,17 +14,30 @@ const WatchList = () => {
     <table class='table'>
       <thead>
         <tr>
-          <th scope='col'>ID</th>
-          <th scope='col'>TITLE</th>
-          <th scope='col'>RATING</th>
-          <th scope='col'>Website</th>
-          <th scope='col'>REMOVE</th>
+          <th scope='col'>
+            <FormattedMessage id='watchlist.ID' defaultMessage='ID' />
+          </th>
+          <th scope='col'>
+            <FormattedMessage id='watchlist.TITLE' defaultMessage='TITLE' />
+          </th>
+          <th scope='col'>
+            <FormattedMessage id='watchlist.RATING' defaultMessage='RATING' />
+          </th>
+          <th scope='col'>
+            <FormattedMessage id='watchlist.WEBSITE' defaultMessage='WEBSITE' />
+          </th>
+          <th scope='col'>
+            <FormattedMessage id='watchlist.REMOVE' defaultMessage='REMOVE' />
+          </th>
         </tr>
       </thead>
       <tbody>
         {watchList.length < 1 ? (
           <td colSpan={5} className='text-center'>
-            There is no Movies in your watchlist
+            <FormattedMessage
+              id='watchlist.EMPTY'
+              defaultMessage='There is no Movies in your watchlist'
+            />
           </td>
         ) : (
           watchList.map(movie => (

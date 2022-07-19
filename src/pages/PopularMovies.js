@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useContext } from 'react'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import Btn from '../components/Btn'
 import MovieCard from '../components/MovieCard'
+import { LocaleContext } from '../lang/LocalizationProvider'
 import MoviesWrapper from '../layout/MoviesWrapper'
 import {
   popularMovieAPIRequest,
@@ -12,16 +14,19 @@ import CallAPi from '../utilities/queryAPI'
 
 const PopularMovies = ({ query }) => {
   const { id } = useParams()
+  const { locale } = useContext(LocaleContext)
+  const intl = useIntl()
+
   const popular = useSelector(stat => stat.popular)
   const dispatch = useDispatch()
 
   const { isFetching } = CallAPi({
     QueryName: 'popular',
-    watchers: [id],
+    watchers: [id, locale],
     refetchOnWindowFocus: false,
     axios: true,
     method: 'GET',
-    url: `movie/popular?api_key=6acbd1e77111f3ead9c9bba49d78ba9f`,
+    url: `movie/popular?api_key=6acbd1e77111f3ead9c9bba49d78ba9f&language=${locale}`,
     params: {
       page: id,
     },
@@ -32,8 +37,10 @@ const PopularMovies = ({ query }) => {
     <Navigate to='/search/1' replace />
   ) : (
     <div className='container'>
-      {isFetching || popular === 'loading' ? (
-        <p>loading</p>
+      {isFetching || popular === intl.messages.loading ? (
+        <p>
+          <FormattedMessage id='loading' defaultMessage='loading' />
+        </p>
       ) : (
         <>
           <MoviesWrapper>
@@ -48,12 +55,24 @@ const PopularMovies = ({ query }) => {
           >
             {id > 1 && (
               <Link to={`/popular/${+id - 1}`}>
-                <Btn btnClassName='btn btn-dark'>Page {+id - 1}</Btn>
+                <Btn btnClassName='btn btn-dark'>
+                  <FormattedMessage
+                    id='paginationBtn'
+                    defaultMessage='page {num}'
+                    values={{ num: +id - 1 }}
+                  />
+                </Btn>
               </Link>
             )}
             {id < popular?.total_pages && (
               <Link to={`/popular/${+id + 1}`}>
-                <Btn btnClassName='btn btn-dark'>Page {+id + 1}</Btn>
+                <Btn btnClassName='btn btn-dark'>
+                  <FormattedMessage
+                    id='paginationBtn'
+                    defaultMessage='page {num}'
+                    values={{ num: +id + 1 }}
+                  />
+                </Btn>
               </Link>
             )}
           </div>

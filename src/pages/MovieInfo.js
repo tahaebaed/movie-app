@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ReactStars from 'react-rating-stars-component'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
@@ -17,28 +17,32 @@ import {
   handlerRemoveToWatchList,
 } from '../store/watchList.js/actions'
 import CallAPi from '../utilities/queryAPI'
+import { LocaleContext } from '../lang/LocalizationProvider'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 const MovieInfo = () => {
   const { id } = useParams()
-
+  const { locale } = useContext(LocaleContext)
+  const intl = useIntl()
   const { data: movieDetails, isLoading: movieDetailsLoading } = CallAPi({
     QueryName: 'movie info',
-    watchers: [id],
+    watchers: [id, locale],
     refetchOnWindowFocus: false,
     axios: true,
     method: 'GET',
-    url: `movie/${id}?api_key=6acbd1e77111f3ead9c9bba49d78ba9f`,
+    url: `movie/${id}?api_key=6acbd1e77111f3ead9c9bba49d78ba9f&language=${locale}`,
   })
 
   const { data: castDetails } = CallAPi({
     QueryName: 'cast info',
-    watchers: [id],
+    watchers: [id, locale],
     refetchOnWindowFocus: false,
     axios: true,
     method: 'GET',
-    url: `movie/${id}/credits?api_key=6acbd1e77111f3ead9c9bba49d78ba9f`,
+    url: `movie/${id}/credits?api_key=6acbd1e77111f3ead9c9bba49d78ba9f&language=${locale}`,
   })
-
+  const arTextEnd = locale === 'ar' ? 'text-end' : ''
+  const arJustifyEnd = locale === 'ar' ? 'justify-content-end' : ''
   const navigate = useNavigate()
   const watchList = useSelector(state => state.watchList)
   const dispatch = useDispatch()
@@ -46,7 +50,7 @@ const MovieInfo = () => {
   const filtered = watchList.filter(mov => mov.id === movieDetails?.data.id)
 
   return movieDetailsLoading ? (
-    <p>loading</p>
+    <FormattedMessage id='loading' defaultMessage='loading' />
   ) : (
     <>
       <div className='row row-cols-lg-2 row-cols-md-1 row-cols-1 mt-3'>
@@ -66,11 +70,15 @@ const MovieInfo = () => {
                 handleClick={() => {
                   dispatch(handlerRemoveToWatchList(movieDetails.data.id))
                   toast.success(
-                    `${movieDetails.data.title} has been removed to your watchlist`
+                    `${movieDetails.data.title} ${intl.messages.removed}`
                   )
                 }}
               >
-                remove from watchlist <BsHeartFill />
+                <FormattedMessage
+                  id='removeToWatchlist'
+                  defaultMessage='Remove From Watchlist'
+                />
+                <BsHeartFill />
               </Btn>
             ) : (
               <Btn
@@ -78,11 +86,15 @@ const MovieInfo = () => {
                 handleClick={() => {
                   dispatch(handleAddToWatchList(movieDetails.data))
                   toast.success(
-                    `${movieDetails.data.title} has been added to your watchlist`
+                    `${movieDetails.data.title} ${intl.messages.added}`
                   )
                 }}
               >
-                Add to watchlist <BsHeart />
+                <FormattedMessage
+                  id='addToWatchlist'
+                  defaultMessage='Add To Watchlist'
+                />
+                <BsHeart />
               </Btn>
             )}
           </div>
@@ -106,8 +118,10 @@ const MovieInfo = () => {
               {movieDetails.data.release_date.match(/\d+/)}
             </div>
           </div>
-          <h2 className='mt-3 fs-5'> the genres</h2>
-          <ul className='d-flex fs-6 p-0'>
+          <h2 className={`mt-3 fs-5 ${arTextEnd}`}>
+            <FormattedMessage id='movie.genres' defaultMessage='THE GENRES' />
+          </h2>
+          <ul className={`d-flex fs-6 p-0 ${arJustifyEnd}`}>
             {movieDetails.data.genres.map(g => (
               <li className='d-flex align-items-center mt-2' key={g.id}>
                 <BsRecordCircleFill className='ms-2' />
@@ -115,11 +129,20 @@ const MovieInfo = () => {
               </li>
             ))}
           </ul>
-          <h2 className='mt-3 fs-5'> THE SYNOPSIS</h2>
-          <p className='fs-6 fw-lighter'>{movieDetails.data.overview}</p>
+          <h2 className={`mt-3 fs-5 ${arTextEnd}`}>
+            <FormattedMessage
+              id='movie.synopsis'
+              defaultMessage='THE SYNOPSIS'
+            />
+          </h2>
+          <p className={`fs-6 fw-lighter ${arTextEnd}`}>
+            {movieDetails.data.overview}
+          </p>
 
-          <h2 className='mt-3 fs-5'> THE CAST</h2>
-          <div className='d-flex'>
+          <h2 className={`mt-3 fs-5 ${arTextEnd}`}>
+            <FormattedMessage id='movie.cast' defaultMessage='THE CAST' />
+          </h2>
+          <div className={`d-flex ${arJustifyEnd}`}>
             {castDetails &&
               castDetails.data.cast
                 .filter((c, i) => i < 5)
@@ -139,7 +162,8 @@ const MovieInfo = () => {
               rel='noreferrer'
             >
               <Btn btnClassName='btn btn-outline-dark rounded-pill me-0'>
-                Website <BsLink45Deg />
+                <FormattedMessage id='movie.website' defaultMessage='website' />
+                <BsLink45Deg />
               </Btn>
             </a>
 
@@ -158,14 +182,16 @@ const MovieInfo = () => {
               rel='noreferrer'
             >
               <Btn btnClassName='btn btn-outline-dark rounded-pill me-0'>
-                Trailer <FaPlay />
+                <FormattedMessage id='movie.trailer' defaultMessage='trailer' />
+                <FaPlay />
               </Btn>
             </a>
             <Btn
               btnClassName='btn btn-dark rounded-pill me-0'
               handleClick={() => navigate(-1)}
             >
-              <BsArrowLeftShort /> Back
+              <BsArrowLeftShort />
+              <FormattedMessage id='movie.backBtn' defaultMessage='back' />
             </Btn>
           </div>
         </div>
